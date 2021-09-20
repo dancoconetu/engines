@@ -1,13 +1,15 @@
 ﻿using PromotionEngine.Models;
 using PromotionEngine.Repositories;
 using System.Collections.Generic;
+using System.Linq;
+using PromotionEngine.Models.Promotions;
 
 namespace PromotionEngine
 {
-    public class DefaultEngine
+    public class Controller
     {
         private readonly IPromotionRepository _promotionRepository;
-        public DefaultEngine(IPromotionRepository promotionRepository)
+        public Controller(IPromotionRepository promotionRepository)
         {
             _promotionRepository = promotionRepository;
         }
@@ -15,6 +17,9 @@ namespace PromotionEngine
         {
             return 100;
         }
+
+
+        
 
     }
 }

@@ -1,5 +1,5 @@
-﻿using PromotionEngine.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PromotionEngine.Models.Promotions;
 
 namespace PromotionEngine.Repositories
 {
