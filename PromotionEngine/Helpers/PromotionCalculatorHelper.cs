@@ -44,5 +44,15 @@ namespace PromotionEngine.Helpers
 
             return totalPrice;
         }
+
+        public static float GetTotalForPercentageDiscountItemsPromotion(Item item, float price,
+            PercentageDiscountPromotion promotion)
+        {
+            if (item.SkuId != promotion.SkuId)
+                throw new ArgumentException("not equal sku ids for item and promotion");
+
+            return item.Quantity * price * (100 - promotion.Discount) / 100;
+        }
+
     }
 }

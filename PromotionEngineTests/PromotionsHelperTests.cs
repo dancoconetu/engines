@@ -117,7 +117,7 @@ namespace PromotionEngineTests
         [Test]
         public void GetApplicablePromotions_0_Promotions_0_Resulting_Promotions()
         {
-            // Arange
+            // Arrange
             var items = new List<Item>
             {
                 new("A", 5),

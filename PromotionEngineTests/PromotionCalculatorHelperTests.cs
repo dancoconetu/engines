@@ -9,10 +9,6 @@ namespace PromotionEngineTests
     public class PromotionCalculatorHelperTests
     {
         
-
-        
-
-
         [Test]
         [TestCase(230, "A", 5, 50, "A", 3, 130)]
         [TestCase(120, "B", 5, 30, "B", 2, 45)]
@@ -43,6 +39,29 @@ namespace PromotionEngineTests
             BundleItemsTogetherForFixedPricePromotion promotion)
         {
             Assert.AreEqual(expectedResult, PromotionCalculatorHelper.GetTotalForBundledItemsPromotion(items, prices, promotion));
+        }
+
+
+        [Test]
+        [TestCase(225, "A", 5, 50, "A", 10)]
+        [TestCase(120, "B", 5, 30, "B", 20)]
+        [TestCase(210, "B", 10, 30, "B", 30)]
+        [TestCase(18, "B", 1, 30, "B", 40)]
+        [TestCase(30, "B", 2, 30, "B", 50)]
+        [TestCase(528, "B", 88, 30, "B", 80)]
+        public void DiscountPromotionOnItemsCalculation(float expectedResult,
+            string itemSkuId,
+            int itemQuantity,
+            float itemPrice,
+            string promotionSkuId,
+            float promotionDiscount)
+        {
+            var item = new Item(itemSkuId, itemQuantity);
+            var promotion =
+                new PercentageDiscountPromotion(1, promotionSkuId, promotionDiscount);
+
+            Assert.AreEqual(expectedResult,
+                PromotionCalculatorHelper.GetTotalForPercentageDiscountItemsPromotion(item, itemPrice, promotion));
         }
 
         public static IEnumerable<TestCaseData> BundleMultipleItemsTestsData

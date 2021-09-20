@@ -137,11 +137,11 @@ namespace PromotionEngine.Helpers
 
                     case BundleItemsTogetherForFixedPricePromotion bundlePromotion:
                     {
-                        var bundledItems = items.Where(item => bundlePromotion.GetSkuIds().Contains(item.SkuId));
+                        var bundledItems = items.Where(item => bundlePromotion.GetSkuIds().Contains(item.SkuId))?.ToList();
                         if (bundledItems?.Count() == 0)
                             throw new ArgumentException($"0 items for bundle promotion");
                         totalPrice +=
-                            PromotionCalculatorHelper.GetTotalForBundledItemsPromotion(items, prices, bundlePromotion);
+                            PromotionCalculatorHelper.GetTotalForBundledItemsPromotion(bundledItems, prices, bundlePromotion);
 
                         break;
                     }
