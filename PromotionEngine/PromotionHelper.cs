@@ -92,7 +92,14 @@ namespace PromotionEngine
 
         public static float ApplyPromotions(List<Item> items, Dictionary<string, float> prices, List<Promotion> promotions)
         {
-            return 0;
+            var totalPrice = 0.0f;
+            foreach (var item in items)
+            {
+                prices.TryGetValue(item.SkuId, out var price);
+                totalPrice += price * item.Quantity;
+            }
+
+            return totalPrice;
         }
     }
 }
