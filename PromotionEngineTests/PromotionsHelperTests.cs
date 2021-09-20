@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using PromotionEngine;
+using PromotionEngine.Helpers;
 using PromotionEngine.Models;
 using PromotionEngine.Models.Promotions;
 using PromotionEngine.Repositories;

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using PromotionEngine;
+using PromotionEngine.Helpers;
 using PromotionEngine.Models;
 using PromotionEngine.Models.Promotions;
 

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PromotionEngine
+namespace PromotionEngine.Helpers
 {
     public static class PromotionHelper
     {
@@ -140,7 +140,8 @@ namespace PromotionEngine
                         var bundledItems = items.Where(item => bundlePromotion.GetSkuIds().Contains(item.SkuId));
                         if (bundledItems?.Count() == 0)
                             throw new ArgumentException($"0 items for bundle promotion");
-
+                        totalPrice +=
+                            PromotionCalculatorHelper.GetTotalForBundledItemsPromotion(items, prices, bundlePromotion);
 
                         break;
                     }

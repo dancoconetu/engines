@@ -4,7 +4,7 @@ using System.Linq;
 using PromotionEngine.Models;
 using PromotionEngine.Models.Promotions;
 
-namespace PromotionEngine
+namespace PromotionEngine.Helpers
 {
     public class PromotionCalculatorHelper
     {
@@ -20,6 +20,26 @@ namespace PromotionEngine
             var promotionTotalPrice = applicablePromotionTotal * promotion.TotalPrice;
             
             var otherItemsPrice = price * nonApplicablePromotionTotal;
+            var totalPrice = promotionTotalPrice + otherItemsPrice;
+
+            return totalPrice;
+        }
+
+
+        public static float GetTotalForBundledItemsPromotion(List<Item> items, Dictionary<string,float> prices, BundleItemsTogetherForFixedPricePromotion promotion)
+        {
+
+            var applicablePromotionTotal = items.Select(item => item.Quantity).Min();
+            var promotionTotalPrice = applicablePromotionTotal * promotion.TotalPrice;
+
+            var otherItemsPrice = 0.0f;
+            foreach (var item in items)
+            {
+                var remainingQuantity = item.Quantity - applicablePromotionTotal;
+                if (!prices.TryGetValue(item.SkuId, out var itemPrice))
+                    throw new ArgumentException($"No price found for SkuId{item.SkuId}");
+                otherItemsPrice += remainingQuantity * itemPrice;
+            }
             var totalPrice = promotionTotalPrice + otherItemsPrice;
 
             return totalPrice;

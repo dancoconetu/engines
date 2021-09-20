@@ -1,8 +1,6 @@
-﻿using PromotionEngine.Models;
+﻿using System.Collections.Generic;
+using PromotionEngine.Models;
 using PromotionEngine.Repositories;
-using System.Collections.Generic;
-using System.Linq;
-using PromotionEngine.Models.Promotions;
 
 namespace PromotionEngine
 {
