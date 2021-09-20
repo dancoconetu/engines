@@ -88,5 +88,11 @@ namespace PromotionEngine
 
             return applicablePromotions;
         }
+
+
+        public static float ApplyPromotions(List<Item> items, Dictionary<string, float> prices, List<Promotion> promotions)
+        {
+            return 0;
+        }
     }
 }
