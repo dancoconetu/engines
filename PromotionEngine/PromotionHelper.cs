@@ -1,10 +1,8 @@
-﻿using System;
+﻿using PromotionEngine.Models;
+using PromotionEngine.Models.Promotions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PromotionEngine.Models;
-using PromotionEngine.Models.Promotions;
 
 namespace PromotionEngine
 {
@@ -121,7 +119,34 @@ namespace PromotionEngine
         public static float CalculateWithPromotions(List<Item> items, Dictionary<string, float> prices,
             List<Promotion> applicablePromotions)
         {
-            return 0;
+            var totalPrice = 0.0f;
+
+            foreach (var promotion in applicablePromotions)
+            {
+                switch (promotion)
+                {
+                    case MultipleItemsForFixedPricePromotion multiplePromotion:
+                        var multiplePromotionItem = items.FirstOrDefault( item => item.SkuId == multiplePromotion.SkuId);
+                        if (multiplePromotionItem == null)
+                            throw new ArgumentException($"0 items for promotion with {multiplePromotion.SkuId}");
+                        if(!prices.TryGetValue(multiplePromotion.SkuId, out var price))
+                            throw new ArgumentException($"Price missing for {multiplePromotion.SkuId}");
+
+                        totalPrice += PromotionCalculatorHelper.GetTotalForMultipleItemsPromotion(multiplePromotionItem, price, multiplePromotion);
+                        break;
+
+                    case BundleItemsTogetherForFixedPricePromotion bundlePromotion:
+                    {
+                        var bundledItems = items.Where(item => bundlePromotion.GetSkuIds().Contains(item.SkuId));
+                        if (bundledItems?.Count() == 0)
+                            throw new ArgumentException($"0 items for bundle promotion");
+
+
+                        break;
+                    }
+                }
+            }
+            return totalPrice;
         }
     }
 }

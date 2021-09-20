@@ -2,9 +2,9 @@
 
 namespace PromotionEngine.Models.Promotions
 {
-    public class OneSkuIdPromotion: Promotion
+    public abstract class OneSkuIdPromotion: Promotion
     {
-        public OneSkuIdPromotion(int priority, string skuId) : base(priority)
+        protected OneSkuIdPromotion(int priority, string skuId) : base(priority)
         {
             SkuId = skuId;
         }

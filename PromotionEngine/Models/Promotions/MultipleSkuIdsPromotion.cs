@@ -3,10 +3,10 @@
 
 namespace PromotionEngine.Models.Promotions
 {
-    public class MultipleSkuIdsPromotion: Promotion
+    public abstract class MultipleSkuIdsPromotion: Promotion
 
     {
-        public MultipleSkuIdsPromotion(int priority, List<string> skuIds) : base(priority)
+        protected MultipleSkuIdsPromotion(int priority, List<string> skuIds) : base(priority)
         {
             SkuIds = skuIds;
         }
