@@ -90,7 +90,22 @@ namespace PromotionEngine
         }
 
 
-        public static float ApplyPromotions(List<Item> items, Dictionary<string, float> prices, List<Promotion> promotions)
+        public static float TryApplyPromotions(List<Item> items, Dictionary<string, float> prices, List<Promotion> applicablePromotions)
+        {
+            var totalPrice = 0.0f;
+            var allSkuIdsFromPromotion = applicablePromotions
+                .SelectMany(applicablePromotion => applicablePromotion.GetSkuIds()).Distinct().ToHashSet();
+
+            var itemsAvailableForPromotion = items.Where(item => allSkuIdsFromPromotion.Contains(item.SkuId)).ToList();
+            var itemsNotAvailableForPromotion = items.Where(item => !allSkuIdsFromPromotion.Contains(item.SkuId)).ToList();
+
+            totalPrice += CalculateWithPromotions(itemsAvailableForPromotion, prices, applicablePromotions) +
+                          CalculateWithoutPromotions(itemsNotAvailableForPromotion, prices);
+
+            return totalPrice;
+        }
+
+        public static float CalculateWithoutPromotions(List<Item> items, Dictionary<string, float> prices)
         {
             var totalPrice = 0.0f;
             foreach (var item in items)
@@ -100,6 +115,13 @@ namespace PromotionEngine
             }
 
             return totalPrice;
+
+        }
+
+        public static float CalculateWithPromotions(List<Item> items, Dictionary<string, float> prices,
+            List<Promotion> applicablePromotions)
+        {
+            return 0;
         }
     }
 }

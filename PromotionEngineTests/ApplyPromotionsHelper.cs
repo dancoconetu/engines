@@ -12,8 +12,11 @@ namespace PromotionEngineTests
 {
     public class ApplyPromotionsHelper
     {
+        /*
+         * Scenario 1 - no promotions
+         */
         [Test]
-        public void ApplySimplePromotions()
+        public void ApplyNoPromotions()
         {
             //arrange 
             var items = new List<Item>
@@ -34,11 +37,47 @@ namespace PromotionEngineTests
 
             //act 
 
-            var resultPrice = PromotionHelper.ApplyPromotions(items, prices, emptyPromotions);
+            var resultPrice = PromotionHelper.TryApplyPromotions(items, prices, emptyPromotions);
 
 
             //assert
             Assert.AreEqual(100.0f, resultPrice);
+        }
+
+        /*
+         * Scenario 2 
+         */
+        [Test]
+        public void ApplySimplePromotions()
+        {
+            //arrange 
+            var items = new List<Item>
+            {
+                new("A", 5),
+                new("B", 5),
+                new("C", 1)
+            };
+
+            var prices = new Dictionary<string, float>
+            {
+                {"A", 50},
+                {"B", 30},
+                {"C", 20}
+            };
+
+            var promotions = new List<Promotion>
+            {
+                new MultipleItemsForFixedPricePromotion(10, "A", 3, 130),
+                new MultipleItemsForFixedPricePromotion(20, "B", 2, 45),
+            };
+
+            //act 
+
+            var resultPrice = PromotionHelper.TryApplyPromotions(items, prices, promotions);
+
+
+            //assert
+            Assert.AreEqual(370.0f, resultPrice);
         }
 
     }

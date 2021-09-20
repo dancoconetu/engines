@@ -7,15 +7,13 @@ namespace PromotionEngine.Models.Promotions
      * QuantityNeeded * SkuId for TotalPrice
      * Example: 3 * A for 130
      */
-    public class MultipleItemsForFixedPricePromotion: Promotion
+    public class MultipleItemsForFixedPricePromotion: OneSkuIdPromotion
     {
-        public MultipleItemsForFixedPricePromotion(int priority, string skuId, int quantityNeeded, float totalPrice): base(priority)
+        public MultipleItemsForFixedPricePromotion(int priority, string skuId, int quantityNeeded, float totalPrice): base(priority, skuId)
         {
-            SkuId = skuId;
             QuantityNeeded = quantityNeeded;
             TotalPrice = totalPrice;
         }
-        public string SkuId { get; }
         public int QuantityNeeded { get; }
         public float TotalPrice { get; }
     }

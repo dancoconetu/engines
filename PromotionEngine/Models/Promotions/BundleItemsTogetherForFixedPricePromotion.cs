@@ -8,14 +8,12 @@ namespace PromotionEngine.Models.Promotions
      * 
      * Example:  C & D for 30
      */
-    public class BundleItemsTogetherForFixedPricePromotion : Promotion
+    public class BundleItemsTogetherForFixedPricePromotion : MultipleSkuIdsPromotion
     {
-        public BundleItemsTogetherForFixedPricePromotion(int priority, List<string> skuIds, float totalPrice): base(priority)
+        public BundleItemsTogetherForFixedPricePromotion(int priority, List<string> skuIds, float totalPrice): base(priority, skuIds)
         {
-            SkuIds = skuIds;
             TotalPrice = totalPrice;
         }
-        public List<string> SkuIds { get; }
         public float TotalPrice { get; }
 
     }

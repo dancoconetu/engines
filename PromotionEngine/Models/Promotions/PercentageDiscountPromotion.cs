@@ -1,4 +1,6 @@
-﻿namespace PromotionEngine.Models.Promotions
+﻿using System.Collections.Generic;
+
+namespace PromotionEngine.Models.Promotions
 {
 
     /*
@@ -6,16 +8,16 @@
      * returns discount percentage for an sku id
      * Example: A has 10% discount
     */
-    public class PercentageDiscountPromotion: Promotion
+    public class PercentageDiscountPromotion: OneSkuIdPromotion
     {
-        public PercentageDiscountPromotion(int priority, string skuId, float discount): base(priority)
+        public PercentageDiscountPromotion(int priority, string skuId, float discount): base(priority, skuId)
         {
             Discount = discount;
-            SkuId = skuId;
         }
 
-        public string SkuId { get; }
 
         public float Discount { get; }
+
+        
     }
 }
