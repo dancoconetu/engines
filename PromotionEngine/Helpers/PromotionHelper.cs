@@ -8,8 +8,6 @@ namespace PromotionEngine.Helpers
 {
     public static class PromotionHelper
     {
-        
-
         public static float TryApplyPromotions(List<Item> items, Dictionary<string, float> prices, List<IPromotion> promotions)
         {
             var applicablePromotions = GetApplicablePromotions(items,promotions);
@@ -36,11 +34,9 @@ namespace PromotionEngine.Helpers
             var applicablePromotions = new List<IPromotion>();
             foreach (var promotion in orderedPromotions)
             {
-
                 var skuIds = promotion.SkuIds.ToHashSet();
                 if (usedSkuIds.Overlaps(skuIds))
                     break;
-
                 var hashSet = new HashSet<string>();
                 var applyThisPromotion = false;
                 foreach (var item in items)
@@ -55,16 +51,12 @@ namespace PromotionEngine.Helpers
                         applyThisPromotion = true;
                         break;
                     }
-
                 }
-
                 if (applyThisPromotion)
                 {
                     usedSkuIds.UnionWith(hashSet);
                     applicablePromotions.Add(promotion);
                 }
-
-
 
             }
 

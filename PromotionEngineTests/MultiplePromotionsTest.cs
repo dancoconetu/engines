@@ -7,7 +7,7 @@ using PromotionEngine.Models.Promotions;
 
 namespace PromotionEngineTests
 {
-    public class ApplyPromotionsHelper
+    public class MultiplePromotionsTest
     {
         /*
          * Scenario A
