@@ -1,15 +1,14 @@
 ﻿
 using System.Collections.Generic;
-using PromotionEngine.Models;
 using PromotionEngine.Models.Promotions;
 
 namespace PromotionEngine.Repositories
 {
     public class PromotionRepository : IPromotionRepository
     {
-        public List<Promotion> GetActivePromotions()
+        public List<IPromotion> GetActivePromotions()
         {
-            var promotions = new List<Promotion>();
+            var promotions = new List<IPromotion>();
 
             var multipleItemsPromotion = 
                 new MultipleItemsForFixedPricePromotion(10, "A", 3, 130);

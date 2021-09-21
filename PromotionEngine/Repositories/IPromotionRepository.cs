@@ -5,6 +5,6 @@ namespace PromotionEngine.Repositories
 {
     public interface IPromotionRepository
     {
-        List<Promotion> GetActivePromotions();
+        List<IPromotion> GetActivePromotions();
     }
 }

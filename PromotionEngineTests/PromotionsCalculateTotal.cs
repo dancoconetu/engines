@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using PromotionEngine.Helpers;
 using PromotionEngine.Models;
 using PromotionEngine.Models.Promotions;
 
 namespace PromotionEngineTests
 {
-    public class PromotionCalculatorHelperTests
+    public class PromotionsCalculateTotal
     {
-        
-        [Test]
         [TestCase(230, "A", 5, 50, "A", 3, 130)]
         [TestCase(120, "B", 5, 30, "B", 2, 45)]
         [TestCase(225, "B", 10, 30, "B", 2, 45)]
@@ -24,12 +21,14 @@ namespace PromotionEngineTests
             int promotionQuantity,
             float promotionTotalPrice)
         {
-            var item = new Item(itemSkuId, itemQuantity);
+            
             var promotion =
                 new MultipleItemsForFixedPricePromotion(1, promotionSkuId, promotionQuantity, promotionTotalPrice);
-
+            var prices = new Dictionary<string, float>() {{itemSkuId, itemPrice}};
+            var items = new List<Item> { new Item(itemSkuId, itemQuantity)};
+         
             Assert.AreEqual(expectedResult,
-                PromotionCalculatorHelper.GetTotalForMultipleItemsPromotion(item, itemPrice, promotion));
+                promotion.CalculateTotal(items, prices ));
         }
 
 
@@ -38,7 +37,7 @@ namespace PromotionEngineTests
             Dictionary<string, float> prices,
             BundleItemsTogetherForFixedPricePromotion promotion)
         {
-            Assert.AreEqual(expectedResult, PromotionCalculatorHelper.GetTotalForBundledItemsPromotion(items, prices, promotion));
+            Assert.AreEqual(expectedResult, promotion.CalculateTotal(items, prices));
         }
 
 
@@ -59,9 +58,10 @@ namespace PromotionEngineTests
             var item = new Item(itemSkuId, itemQuantity);
             var promotion =
                 new PercentageDiscountPromotion(1, promotionSkuId, promotionDiscount);
-
+            var prices = new Dictionary<string, float>() { { itemSkuId, itemPrice } };
+            var items = new List<Item> { new Item(itemSkuId, itemQuantity) };
             Assert.AreEqual(expectedResult,
-                PromotionCalculatorHelper.GetTotalForPercentageDiscountItemsPromotion(item, itemPrice, promotion));
+                promotion.CalculateTotal(items, prices));
         }
 
         public static IEnumerable<TestCaseData> BundleMultipleItemsTestsData

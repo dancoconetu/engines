@@ -30,7 +30,7 @@ namespace PromotionEngineTests
                 {"C", 20}
             };
 
-            var emptyPromotions = new List<Promotion>();
+            var emptyPromotions = new List<IPromotion>();
 
             //act 
 
@@ -62,7 +62,7 @@ namespace PromotionEngineTests
                 {"C", 20}
             };
 
-            var promotions = new List<Promotion>
+            var promotions = new List<IPromotion>
             {
                 new MultipleItemsForFixedPricePromotion(10, "A", 3, 130),
                 new MultipleItemsForFixedPricePromotion(20, "B", 2, 45),
@@ -100,7 +100,7 @@ namespace PromotionEngineTests
                 {"D", 15}
             };
 
-            var promotions = new List<Promotion>
+            var promotions = new List<IPromotion>
             {
                 new MultipleItemsForFixedPricePromotion(10, "A", 3, 130),
                 new MultipleItemsForFixedPricePromotion(20, "B", 2, 45),
@@ -141,7 +141,7 @@ namespace PromotionEngineTests
                 {"E", 100}
             };
 
-            var promotions = new List<Promotion>
+            var promotions = new List<IPromotion>
             {
                 new MultipleItemsForFixedPricePromotion(10, "A", 3, 130),
                 new MultipleItemsForFixedPricePromotion(20, "B", 2, 45),
@@ -152,7 +152,6 @@ namespace PromotionEngineTests
             //act 
 
             var resultPrice = PromotionHelper.TryApplyPromotions(items, prices, promotions);
-
 
             //assert
             Assert.AreEqual(1180, resultPrice);

@@ -22,16 +22,17 @@ namespace PromotionEngineTests
                 new("B", 3)
             };
 
-            var promotions = new List<Promotion>();
+            var promotions = new List<IPromotion>();
 
             var multipleItemsPromotion =
                 new MultipleItemsForFixedPricePromotion(10, "A", 3, 130);
             var multipleItemsPromotion2 =
                 new MultipleItemsForFixedPricePromotion(30, "B", 2, 45);
-            var bundleItemsPromotion =
-                new BundleItemsTogetherForFixedPricePromotion(50, new List<string> { "C", "D" }, 30);
             var percentageDiscountPromotion =
                 new PercentageDiscountPromotion(100, "D", 10);
+            var bundleItemsPromotion =
+                new BundleItemsTogetherForFixedPricePromotion(50, new List<string> { "C", "D" }, 30);
+          
 
             promotions.Add(multipleItemsPromotion);
             promotions.Add(multipleItemsPromotion2);
@@ -65,7 +66,7 @@ namespace PromotionEngineTests
                 new("C", 4)
             };
 
-            var promotions = new List<Promotion>();
+            var promotions = new List<IPromotion>();
 
             var multipleItemsPromotion =
                 new MultipleItemsForFixedPricePromotion(10, "A", 3, 130);
@@ -92,6 +93,43 @@ namespace PromotionEngineTests
         }
 
         [Test]
+        public void GetApplicablePromotions_Same_SKUID_One_Promotion_Higher_Priority()
+        {
+            // Arrange
+            var items = new List<Item>
+            {
+                new("A", 5),
+                new("D", 3),
+                new("C", 4)
+            };
+
+            var promotions = new List<IPromotion>();
+
+            var multipleItemsPromotion =
+                new MultipleItemsForFixedPricePromotion(10, "A", 3, 130);
+            var percentageDiscountPromotion =
+                new PercentageDiscountPromotion(15, "D", 10);
+            var bundleItemsPromotion =
+                new BundleItemsTogetherForFixedPricePromotion(5, new List<string> { "A", "D" }, 30);
+
+
+            promotions.Add(multipleItemsPromotion);
+            promotions.Add(bundleItemsPromotion);
+            promotions.Add(percentageDiscountPromotion);
+
+            // Act
+            var resultPromotions = PromotionHelper.GetApplicablePromotions(items, promotions);
+
+            // Assert
+            Assert.AreEqual(1, resultPromotions.Count);
+            Assert.AreEqual(1, resultPromotions.OfType<BundleItemsTogetherForFixedPricePromotion>().Count());
+      
+            Assert.Contains("A", resultPromotions.OfType<BundleItemsTogetherForFixedPricePromotion>().SelectMany(r => r.SkuIds)?.ToList());
+            Assert.Contains("D", resultPromotions.OfType<BundleItemsTogetherForFixedPricePromotion>().SelectMany(r => r.SkuIds)?.ToList());
+
+        }
+
+        [Test]
         public void GetApplicablePromotions_Throws_Error_Same_PriorityId()
         {
             // Arrange
@@ -101,7 +139,7 @@ namespace PromotionEngineTests
                 new("D", 3),
                 new("C", 4)
             };
-            var promotions = new List<Promotion>();
+            var promotions = new List<IPromotion>();
             var multipleItemsPromotion =
                 new MultipleItemsForFixedPricePromotion(10, "A", 3, 130);
             var percentageDiscountPromotion =
@@ -124,7 +162,7 @@ namespace PromotionEngineTests
                 new("D", 3),
                 new("C", 4)
             };
-            var promotions = new List<Promotion>();
+            var promotions = new List<IPromotion>();
 
 
             // Assert
